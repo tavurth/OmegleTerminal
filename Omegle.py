@@ -85,7 +85,6 @@ class Omegle:
     def conn_callback(self):
         """ Called when we are connected to an active user """
         print 'Connected to a random stranger!\n'
-        self.talk('I wrote an Omegle client in python, you can use it for bots etc. :) imgur.com/gallery/u46TfTL')
 
     def exit_callback(self):
         """ Called when we are disconnected from a session """
