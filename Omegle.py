@@ -174,6 +174,10 @@ class Omegle:
         # Check for a help request
         if message == 'help':
             help_function()
+            return True
+
+        # No processing
+        return False
             
     def type(self):
         """ Tell Omegle that we're typing something """
@@ -194,7 +198,8 @@ class Omegle:
 
         # Process terminal commands
         if kwargs.get('process', True):
-            self.process(message)
+            if self.process(message):
+                return
 
         # Error checking
         if not self.valid():
