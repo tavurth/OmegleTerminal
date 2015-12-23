@@ -74,6 +74,12 @@ class Omegle:
     def error(self, message = ''):
         """ Give an error to the stdout """
         print "Error: " + message
+
+    def valid(self):
+        """ Check the validity of internal variables """
+        if self.handle == '{}':
+            self.error('could not connect to Omegle.com')
+            return False
     
     def response(self):
         """ Get a RAW response from the stranger """
@@ -105,7 +111,11 @@ class Omegle:
 
     def listen(self):
         """ Used to listen for convesation partner input """
-    
+
+        # Error checking
+        if not self.valid():
+            return
+        
         # Loop until told to quit
         while True:
 
@@ -130,8 +140,7 @@ class Omegle:
         self.handle = web.urlopen('http://omegle.com/start').read()
 
         # Check for errors
-        if len(self.handle) == '{}':
-            self.error('connecting to Omegle.com')
+        if not self.valid():
             return
 
         # Strip the handle string of quotations
@@ -165,8 +174,7 @@ class Omegle:
         """ Tell Omegle that we're typing something """
 
         # Check for a valid handle
-        if self.handle == '{}':
-            print self.error('connecting to Omegle.com')
+        if not self.valid():
             return
 
         # Tell Omegl that we're typing
@@ -183,6 +191,10 @@ class Omegle:
         if kwargs.get('process', True):
             self.process(message)
 
+        # Error checking
+        if not self.valid():
+            return
+            
         # Talk to Omegle
         msgReq = web.urlopen('http://omegle.com/send', 'msg=' + message + '&id=' + self.handle).close()
 
