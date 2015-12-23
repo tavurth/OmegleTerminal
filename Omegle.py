@@ -71,6 +71,10 @@ class Omegle:
         if kwargs.get('connect', True):
             self.connect()
 
+    def error(self, message = ''):
+        """ Give an error to the stdout """
+        print "Error: " + message
+    
     def response(self):
         """ Get a RAW response from the stranger """
         try:
@@ -127,7 +131,7 @@ class Omegle:
 
         # Check for errors
         if len(self.handle) == '{}':
-            print 'Error connecting to Omegle.com'
+            self.error('connecting to Omegle.com')
             return
 
         # Strip the handle string of quotations
@@ -159,10 +163,14 @@ class Omegle:
             
     def type(self):
         """ Tell Omegle that we're typing something """
-        try:
-            web.urlopen('http://omegle.com/typing', 'id=' + self.handle).close()
-        except:
-            pass
+
+        # Check for a valid handle
+        if self.handle == '{}':
+            print self.error('connecting to Omegle.com')
+            return
+
+        # Tell Omegl that we're typing
+        web.urlopen('http://omegle.com/typing', 'id=' + self.handle).close()
     
     def talk(self, message, **kwargs):
         """ Send a message to our conversation partner """
