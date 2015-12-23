@@ -122,8 +122,16 @@ class Omegle:
 
     def connect(self):
         """ Begin a new conversation """
-        # Initialise the connection and return the url string stripped of quotations
-        self.handle = web.urlopen('http://omegle.com/start').read()[1 : -1]
+        # Initialise the connection and return the url
+        self.handle = web.urlopen('http://omegle.com/start').read()
+
+        # Check for errors
+        if len(self.handle) == '{}':
+            print 'Error connecting to Omegle.com'
+            return
+
+        # Strip the handle string of quotations
+        self.handle = self.handle[1 : -1]
 
         # Save our nevent request
         self.stranger = web.Request('http://omegle.com/events', 'id=' + self.handle)
