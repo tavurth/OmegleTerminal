@@ -76,11 +76,12 @@ class Omegle:
 
     def wait_callback(self):
         """ Called when we are waiting for a connection """
-        print "Waiting..."
+        print 'Waiting...'
 
     def conn_callback(self):
         """ Called when we are connected to an active user """
-        print "Connected to a random stranger!\n"
+        print 'Connected to a random stranger!\n'
+        self.talk('I wrote an Omegle client in python, you can use it for bots etc. :) imgur.com/gallery/u46TfTL')
 
     def exit_callback(self):
         """ Called when we are disconnected from a session """
@@ -89,11 +90,11 @@ class Omegle:
 
     def type_callback(self):
         """ Called when the stranger is typing """
-        print "Stranger is typing..."
+        print 'Stranger is typing...'
 
     def hear_callback(self, message):
         """ Called when the stranger sends us a message """
-        print "Stranger: " + message
+        print 'Stranger: ' + message
 
     def listen(self):
         """ Used to listen for convesation partner input """
@@ -154,7 +155,7 @@ class Omegle:
         
         # Output to the terminal
         if kwargs.get('show', True):
-            print "You:" + message
+            print 'You: ' + message
 
         # Process terminal commands
         if kwargs.get('process', True):
