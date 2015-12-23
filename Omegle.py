@@ -77,9 +77,14 @@ class Omegle:
 
     def valid(self):
         """ Check the validity of internal variables """
+
+        # We were unable to create a connection
         if self.handle == '{}':
             self.error('could not connect to Omegle.com')
             return False
+
+        # Everything is correct
+        return True
     
     def response(self):
         """ Get a RAW response from the stranger """
