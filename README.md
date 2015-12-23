@@ -3,7 +3,7 @@ A simple Omegle terminal client
 
 # Requires:
   Python
-    urllib2
+  urllib2
     
 # Use
   Open your terminal
