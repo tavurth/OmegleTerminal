@@ -67,7 +67,10 @@ class Omegle:
 
     def response(self):
         """ Get a RAW response from the stranger """
-        return web.urlopen(self.stranger).read()
+        try:
+            return web.urlopen(self.stranger).read()
+        except:
+            return ''
 
     def wait_callback(self):
         """ Called when we are waiting for a connection """
