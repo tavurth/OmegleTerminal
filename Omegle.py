@@ -85,6 +85,7 @@ class Omegle:
     def conn_callback(self):
         """ Called when we are connected to an active user """
         print 'Connected to a random stranger!\n'
+        self.talk('I wrote an Omegle client in python, you can use it for bots etc. :) imgur.com/gallery/u46TfTL')
 
     def exit_callback(self):
         """ Called when we are disconnected from a session """
@@ -151,7 +152,10 @@ class Omegle:
             
     def type(self):
         """ Tell Omegle that we're typing something """
-        web.urlopen('http://omegle.com/typing', 'id=' + self.handle).close()
+        try:
+            web.urlopen('http://omegle.com/typing', 'id=' + self.handle).close()
+        except:
+            pass
     
     def talk(self, message, **kwargs):
         """ Send a message to our conversation partner """
