@@ -1,0 +1,31 @@
+* OmegleTerminal
+
+A simple Omegle terminal client
+
+** NO LONGER FUNCTIONAL (10/04/2020)
+
+Recently Omegle has changed their architecture to support google recaptcha for
+the authentication of users. I've not had luck from my locale getting this
+working as Omegle is always asking for a recaptcha.
+
+Please check the [[./connection.org][Connection info]] for more information.
+
+
+* Installation:
+** Requires
+python3
+
+#+BEGIN_SRC bash
+git clone git@github.com:tavurth/OmegleTerminal.git
+cd OmegleTerminal
+pip install -r requirements.txt
+#+END_SRC
+
+* Usage
+
+Open your terminal:
+
+#+BEGIN_SRC bash
+cd ~/src/OmegleTerminal
+python Omegle.py
+#+END_SRC

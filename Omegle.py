@@ -1,34 +1,34 @@
 #! /usr/bin/python
 
-################################################################################################################
-################################################################################################################
+############################################################
+############################################################
 ##
-## 		
-## 		Copyright 2015 William Whitty
-## 		will.whitty.arbeit@gmail.com
-## 		
-## 		Licensed under the Apache License, Version 2.0 (the "License");
-## 		you may not use this file except in compliance with the License.
-## 		You may obtain a copy of the License at
-## 		
-## 		    http://www.apache.org/licenses/LICENSE-2.0
-## 		
-## 		Unless required by applicable law or agreed to in writing, software
-## 		distributed under the License is distributed on an "AS IS" BASIS,
-## 		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-## 		See the License for the specific language governing permissions and
-## 		limitations under the License.
-## 		
-##				
-################################################################################################################
-################################################################################################################
+## 
+## Copyright 2015 William Whitty
+## will.whitty.arbeit@gmail.com
+## 
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+## 
+##     http://www.apache.org/licenses/LICENSE-2.0
+## 
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+## 
+##
+############################################################
+############################################################
 
 # Import STD
 import sys
 import json
 import time
 import threading
-import urllib2 as web
+import urllib2
 
 # Import Global
 # Import Local
@@ -89,7 +89,7 @@ class Omegle:
     def response(self):
         """ Get a RAW response from the stranger """
         try:
-            return web.urlopen(self.stranger).read()
+            return urlopen(self.stranger).read()
         except:
             return ''
 
@@ -142,7 +142,7 @@ class Omegle:
     def connect(self):
         """ Begin a new conversation """
         # Initialise the connection and return the url
-        self.handle = web.urlopen('http://omegle.com/start').read()
+        self.handle = urlopen('http://omegle.com/start').read()
 
         # Check for errors
         if not self.valid():
@@ -152,7 +152,7 @@ class Omegle:
         self.handle = self.handle[1 : -1]
 
         # Save our nevent request
-        self.stranger = web.Request('http://omegle.com/events', 'id=' + self.handle)
+        self.stranger = Request('http://omegle.com/events', 'id=' + self.handle)
 
         # Get the response
         response = self.response()
@@ -187,7 +187,7 @@ class Omegle:
             return
 
         # Tell Omegl that we're typing
-        web.urlopen('http://omegle.com/typing', 'id=' + self.handle).close()
+        urlopen('http://omegle.com/typing', 'id=' + self.handle).close()
     
     def talk(self, message, **kwargs):
         """ Send a message to our conversation partner """
@@ -206,7 +206,7 @@ class Omegle:
             return
             
         # Talk to Omegle
-        msgReq = web.urlopen('http://omegle.com/send', 'msg=' + message + '&id=' + self.handle).close()
+        msgReq = urlopen('http://omegle.com/send', 'msg=' + message + '&id=' + self.handle).close()
 
     def start_thread(self):
         """ Begins a listener in a seperate thread, so that the user can give input """

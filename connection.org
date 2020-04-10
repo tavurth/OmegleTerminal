@@ -1,0 +1,76 @@
+#+TITLE: Omegle Connection
+
+* Omegle connection flow
+Omegle has recently changed it's connection flow.
+Below I outline the reasons why our app no longer works
+
+** First let's create a basic connection to omegle
+We'll call the ~/start~ route
+
+#+BEGIN_SRC restclient
+POST https://front1.omegle.com/start
+accept: application/json
+authority: front1.omegle.com
+Accept-Encoding: compress, gzip
+#+END_SRC
+
+Which should give us a ~shardId~
+#+BEGIN_SRC js
+"shard2:SOME_ID"
+#+END_SRC
+
+** Now let's try to use that connection
+Let's try to send to that shardId:
+#+BEGIN_SRC restclient :var shardId=shardId
+POST https://front1.omegle.com/send
+Accept-Encoding: compress, gzip
+Content-Type: application/x-www-form-urlencoded
+{ "msg": "Hi!", "id": "shard2:SOME_ID" }
+#+END_SRC
+
+Hmm, that doesn't seem to work...
+#+BEGIN_SRC text
+fail
+#+END_SRC
+
+** Let's try to get some events from that shardId instead:
+#+BEGIN_SRC restclient :var shardId=shardId
+POST https://front1.omegle.com/events
+Accept-Encoding: compress, gzip
+Content-Type: application/x-www-form-urlencoded
+{ "id": "shard2:SOME_ID" }
+#+END_SRC
+
+Not that either.
+#+BEGIN_SRC js
+null
+#+END_SRC
+
+* The issue
+What we're seing here is that we're missing the built in recaptcha system which
+has been implemented in Omegle's backend.
+
+#+BEGIN_SRC restclient
+POST https://front1.omegle.com/start?caps=recaptcha2&firstevents=1&spid=&randid=5LX3GHAV&lang=en
+accept: application/json
+authority: front1.omegle.com
+Accept-Encoding: compress, gzip
+#+END_SRC
+
+#+BEGIN_SRC js
+{
+  "events": [
+    [
+      "recaptchaRequired",
+      "6LekMVAUAAAAAPDp1Cn7YMzjZynSb9csmX5V4a9P"
+    ]
+  ],
+  "clientID": "shard2:SOME_ID"
+}
+#+END_SRC
+
+** So omegle is really telling us:
+"Hey, without recaptcha I'm not gonna let you past"
+
+They may have other forms of recaptcha which are better suited to the terminal,
+but from a quick browse I was only able to see the one.
